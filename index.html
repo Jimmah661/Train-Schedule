@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <title>Train Timetable</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+</head>
+
+<body class="container">
+    <div class="row">
+        <div class="jumbotron col-md-12">
+            <div class="container">
+                <h1 class="display-4">Train Timetables</h1>
+                <p class="lead">Choo-Choo Bitches!
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card col-md-12 mb-4 px-0">
+            <div class="card-header">
+                Train Schedule
+            </div>
+            <div class="card-body" id="schedule">
+                <li class="list-group-item">This is where the Train information will be displayed</li>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card col-md-12 px-0">
+            <div class="card-header">
+                Add a train
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="trainName">Train Name</label>
+                        <input type="text" class="form-control" id="trainName" placeholder="Hogwarts Express">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" class="form-control" id="destination" placeholder="Hogwarts">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstTime">First Train Time (HH:mm - Military Time</label>
+                        <input type="date" class="form-control" id="firstTime">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="frequency">Frequency (min)</label>
+                        <input type="number" class="form-control" id="frequency" placeholder="10">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Train</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
