@@ -1,3 +1,4 @@
+// Initialise Firebase
 var firebaseConfig = {
     apiKey: "AIzaSyCU9OtgZ3fqyQulZ_mEDmu01pnmfCJ3j-c",
     authDomain: "train-timetable-77fa2.firebaseapp.com",
@@ -6,6 +7,36 @@ var firebaseConfig = {
     storageBucket: "",
     messagingSenderId: "1022215882729",
     appId: "1:1022215882729:web:76b388fcc1814688"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+var database = firebase.database();
+
+
+// On click function to deal with submitting new train times
+$('button').on('click', function (event) {
+    event.preventDefault();
+
+    var name = $('#trainName').val().trim();
+    var dest = $('#destination').val().trim();
+    var first = $('#firstTime').val().trim();
+    var freq = $('#frequency').val().trim();
+
+    console.log(name, dest, first, freq);
+    $('#trainName').val("");
+    $('#destination').val("");
+    $('#firstTime').val("");
+    $('#frequency').val("");
+
+    database.ref('/newTrain').push({
+        name: name,
+        dest: dest,
+        first: first,
+        freq: freq
+    });
+});
+
+database.ref('/newTrain').on('child_added', function (snapshot) {
+
+});
