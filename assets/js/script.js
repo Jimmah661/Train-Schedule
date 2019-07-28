@@ -37,6 +37,17 @@ $('button').on('click', function (event) {
     });
 });
 
-database.ref('/newTrain').on('child_added', function (snapshot) {
+database.ref('/newTrain').on('child_added', function (snap) {
+    var trainRow = $('<tr>');
 
+    var name = snap.val().name;
+    var dest = snap.val().dest;
+    var first = snap.val().first;
+    var freq = snap.val().freq;
+
+    trainRow.append($('<td>' + name + '</td>'));
+    trainRow.append($('<td>' + dest + '</td>'));
+    trainRow.append($('<td>' + freq + '</td>'));
+
+    $('#trainList').append(trainRow)
 });
