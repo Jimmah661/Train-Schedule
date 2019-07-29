@@ -40,14 +40,28 @@ $('button').on('click', function (event) {
 database.ref('/newTrain').on('child_added', function (snap) {
     var trainRow = $('<tr>');
 
-    var name = snap.val().name;
+    var trainTime = moment(snap.val().first, "HH:mm")
+    console.log(trainTime)
+    // var name = snap.val().name;
     var dest = snap.val().dest;
     var first = snap.val().first;
     var freq = snap.val().freq;
+    var time = moment().from(trainTime)
+    console.log(time)
 
-    trainRow.append($('<td>' + name + '</td>'));
-    trainRow.append($('<td>' + dest + '</td>'));
-    trainRow.append($('<td>' + freq + '</td>'));
+    // Steps to work out the Time till next and the minutes remaining
+    // minus the initial time from the current time
+    // times the number of hours by 60 and add to the minutes to get minutes elapsed
+    // get the modulus remainder of the minutes elapsed by the frequency
+    // times the modulus remainder by the frequency
+    // minus the modulus*frequency from the minutes elapsed to get time till next train
+    // minus the time till next train from the frequency and add to current time to get the next departure time
+
+    trainRow.append($('<td>' + snap.val().name + '</td>'));
+    trainRow.append($('<td>' + snap.val().dest + '</td>'));
+    trainRow.append($('<td>' + snap.val().freq + '</td>'));
+    trainRow.append($('<td>' + "Next Arrival" + '</td>'));
+    trainRow.append($('<td>' + "Minutes Away" + '</td>'));
 
     $('#trainList').append(trainRow)
 });
