@@ -10,9 +10,7 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 var database = firebase.database();
-
 
 // On click function to deal with submitting new train times
 $('button').on('click', function (event) {
@@ -20,7 +18,7 @@ $('button').on('click', function (event) {
 
     var name = $('#trainName').val().trim();
     var dest = $('#destination').val().trim();
-    var first = $('#firstTime').val().trim();
+    var first = moment(($('#firstTime').val().trim()), 'HH:mm').format('HH:mm')
     var freq = $('#frequency').val().trim();
 
     console.log(name, dest, first, freq);
@@ -39,15 +37,17 @@ $('button').on('click', function (event) {
 
 database.ref('/newTrain').on('child_added', function (snap) {
     var trainRow = $('<tr>');
-
     var trainTime = moment(snap.val().first, "HH:mm")
-    console.log(trainTime)
-    // var name = snap.val().name;
-    var dest = snap.val().dest;
-    var first = snap.val().first;
-    var freq = snap.val().freq;
-    var time = moment().from(trainTime)
-    console.log(time)
+    // var currentTime = moment().format('HH:mm');
+    var difference = moment().diff(trainTime, 'minutes');
+    var remainingTime = parseInt(snap.val().freq) - (difference % parseInt(snap.val().freq));
+    var nextArrival = moment().add(remainingTime, 'minutes').format('LT');
+    console.log(trainTime);
+    // console.log("Current Time: " + currentTime);
+    console.log("difference: " + difference);
+    console.log(remainingTime)
+    console.log(moment().add(remainingTime, 'minutes'))
+    console.log(moment().add(remainingTime, 'minutes').format('LT'))
 
     // Steps to work out the Time till next and the minutes remaining
     // minus the initial time from the current time
@@ -60,8 +60,14 @@ database.ref('/newTrain').on('child_added', function (snap) {
     trainRow.append($('<td>' + snap.val().name + '</td>'));
     trainRow.append($('<td>' + snap.val().dest + '</td>'));
     trainRow.append($('<td>' + snap.val().freq + '</td>'));
-    trainRow.append($('<td>' + "Next Arrival" + '</td>'));
-    trainRow.append($('<td>' + "Minutes Away" + '</td>'));
+    trainRow.append($('<td>' + nextArrival + '</td>'));
+    if (remainingTime == 0) {
+        trainRow.append($('<td>Arriving Now!</td>'))
+    }
+    else {
+        trainRow.append($('<td>' + remainingTime + ' Minutes</td>'));
+    }
+
 
     $('#trainList').append(trainRow)
 });
